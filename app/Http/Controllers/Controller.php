@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Jobs\ProcessProduct;
@@ -106,8 +108,8 @@ abstract class Controller
         ])->post($url, $data);
 
         if ($response->failed()) {
-            Log::error('API request failed: '.$response->body());
-            throw new Exception('Error: '.$response->body());
+            Log::error('API request failed: ' . $response->body());
+            throw new Exception('Error: ' . $response->body());
         }
 
         return $response->json();

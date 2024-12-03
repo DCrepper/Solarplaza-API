@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Jobs;
 
 use Exception;
@@ -14,11 +16,17 @@ use Illuminate\Support\Facades\Storage;
 
 class ProcessProduct implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable;
+    use InteractsWithQueue;
+    use Queueable;
+    use SerializesModels;
 
     protected $product;
+
     protected $products_base;
+
     protected $filename;
+
     protected $apiKey = 'sTG1ytYTxF2864F';
 
     public function __construct(array $product, array $products_base, string $filename)
@@ -48,7 +56,7 @@ class ProcessProduct implements ShouldQueue
             $productData[1] = implode('|', array_column($prd_, 'url'));
             Storage::append($this->filename, implode(',', $productData));
 
-            Log::info("Processed product ID: $productId");
+            Log::info("Processed product ID: {$productId}");
         } catch (Exception $e) {
             Log::error("Failed to process product ID: {$this->product['product_id']}. Error: " . $e->getMessage());
         }

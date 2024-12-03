@@ -1,0 +1,27 @@
+{
+    "preset": "psr12",
+    "rules": {
+        "align_multiline_comment": true,
+        "array_indentation": true,
+        "array_syntax": true,
+        "blank_line_after_namespace": true,
+        "blank_line_after_opening_tag": true,
+        "combine_consecutive_issets": true,
+        "combine_consecutive_unsets": true,
+        "concat_space": {
+            "spacing": "one"
+        },
+        "declare_parentheses": true,
+        "declare_strict_types": true,
+        "explicit_string_variable": true,
+        "final_class": false,
+        "fully_qualified_strict_types": true,
+        "global_namespace_import": {
+            "import_classes": true,
+            "import_constants": true,
+            "import_functions": true
+        },
+        "is_null": true,
+        "lambda_not_used_import": true
+    }
+}
