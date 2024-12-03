@@ -1,9 +1,13 @@
 {
     "preset": "psr12",
     "rules": {
-        "align_multiline_comment": true,
+        "align_multiline_comment": {
+            "comment_type": "phpdocs_only"
+        },
         "array_indentation": true,
-        "array_syntax": true,
+        "array_syntax": {
+            "syntax": "short"
+        },
         "blank_line_after_namespace": true,
         "blank_line_after_opening_tag": true,
         "combine_consecutive_issets": true,
