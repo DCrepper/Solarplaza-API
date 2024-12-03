@@ -14,6 +14,8 @@ class CreateProductBasesTable extends Migration
             $table->id();
             $table->string('index')->unique();
             $table->json('logistic_parameters');
+            $table->decimal('weight', 8, 2)->nullable(); // New field
+            $table->json('dimensions')->nullable(); // New field
             $table->timestamps();
         });
     }

@@ -14,5 +14,6 @@ class ProductDocument extends Model
     protected $fillable = [
         'product_id',
         'url',
+        'type', // New field
     ];
 }

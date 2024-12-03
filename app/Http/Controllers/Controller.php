@@ -22,22 +22,22 @@ abstract class Controller
         Storage::put($filename, '');
         $headers = ['ean_code', 'url'];
         Storage::append($filename, implode(';', $headers));
-        $products_list = $this->GetProductsList()['products_list'];
-        $products_base = $this->GetProductBase()['products_base'];
+        
+        $productsListResponse = $this->GetProductsList();
+        $productsBaseResponse = $this->GetProductBase();
+        
+        $products_list = $productsListResponse['products_list'];
+        $products_base = $productsBaseResponse['products_base'];
 
-        $counter = 0;
         $batch = Bus::batch([])->dispatch();
 
-        foreach ($products_list as $product) {
-            if ($counter >= 3000 && $counter < 4000) {
-                $batch->add(new ProcessProduct($product, $products_base, $filename));
+        foreach ($products_list as $index => $product) {
+            $batch->add(new ProcessProduct($product, $products_base, $filename));
 
-                if ($counter % 99 == 0 && $counter > 1) {
-                    Log::info('Reached maximum requests per minute. Waiting for 1 minute...');
-                    sleep(61); // Pause for 1 minute
-                }
+            if ($index % 99 == 0 && $index > 0) {
+                Log::info('Reached maximum requests per minute. Waiting for 1 minute...');
+                sleep(61); // Pause for 1 minute
             }
-            $counter++;
         }
 
         Log::info('Batch processing started for products.');

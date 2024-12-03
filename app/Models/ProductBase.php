@@ -14,9 +14,12 @@ class ProductBase extends Model
     protected $fillable = [
         'index',
         'logistic_parameters',
+        'weight', // New field
+        'dimensions', // New field
     ];
 
     protected $casts = [
         'logistic_parameters' => 'array',
+        'dimensions' => 'array', // New cast
     ];
 }

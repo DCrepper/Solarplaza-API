@@ -14,6 +14,7 @@ class CreateProductDocumentsTable extends Migration
             $table->id();
             $table->string('product_id');
             $table->string('url');
+            $table->string('type')->nullable(); // New field
             $table->timestamps();
         });
     }

@@ -18,6 +18,8 @@ class CreateProductsTable extends Migration
             $table->string('index');
             $table->string('ean_code')->nullable();
             $table->json('urls')->nullable();
+            $table->text('description')->nullable(); // New field
+            $table->decimal('price', 8, 2)->nullable(); // New field
             $table->timestamps();
         });
     }

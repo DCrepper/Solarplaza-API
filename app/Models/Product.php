@@ -18,9 +18,12 @@ class Product extends Model
         'index',
         'ean_code',
         'urls',
+        'description', // New field
+        'price',       // New field
     ];
 
     protected $casts = [
         'urls' => 'array',
+        'price' => 'float', // New cast
     ];
 }
