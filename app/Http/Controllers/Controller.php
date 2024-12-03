@@ -22,10 +22,10 @@ abstract class Controller
         Storage::put($filename, '');
         $headers = ['ean_code', 'url'];
         Storage::append($filename, implode(';', $headers));
-        
+
         $productsListResponse = $this->GetProductsList();
         $productsBaseResponse = $this->GetProductBase();
-        
+
         $products_list = $productsListResponse['products_list'];
         $products_base = $productsBaseResponse['products_base'];
 
