@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
+use App\Models\Product;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 class CreateProductDocumentsTable extends Migration
 {
@@ -12,9 +13,9 @@ class CreateProductDocumentsTable extends Migration
     {
         Schema::create('product_documents', function (Blueprint $table) {
             $table->id();
-            $table->string('product_id');
-            $table->string('url');
-            $table->string('type')->nullable(); // New field
+            $table->foreignIdFor(Product::class)->nullable();
+            $table->string('description')->nullable();
+            $table->string('url')->nullable();
             $table->timestamps();
         });
     }

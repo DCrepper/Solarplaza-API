@@ -1,20 +1,21 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\ProductBaseResource\Pages;
-use App\Models\ProductBase;
+use App\Filament\Resources\SubCategoryResource\Pages;
+use App\Filament\Resources\SubCategoryResource\RelationManagers;
+use App\Models\SubCategory;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class ProductBaseResource extends Resource
+class SubCategoryResource extends Resource
 {
-    protected static ?string $model = ProductBase::class;
+    protected static ?string $model = SubCategory::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -22,15 +23,9 @@ class ProductBaseResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('index')
-                    ->required(),
-                Forms\Components\Textarea::make('logistic_parameters')
-                    ->required()
-                    ->columnSpanFull(),
-                Forms\Components\TextInput::make('weight')
-                    ->numeric(),
-                Forms\Components\Textarea::make('dimensions')
-                    ->columnSpanFull(),
+                Forms\Components\Select::make('category_id')
+                    ->relationship('category', 'name'),
+                Forms\Components\TextInput::make('name'),
             ]);
     }
 
@@ -38,11 +33,11 @@ class ProductBaseResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('index')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('weight')
+                Tables\Columns\TextColumn::make('category.name')
                     ->numeric()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('name')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -75,9 +70,9 @@ class ProductBaseResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListProductBases::route('/'),
-            'create' => Pages\CreateProductBase::route('/create'),
-            'edit' => Pages\EditProductBase::route('/{record}/edit'),
+            'index' => Pages\ListSubCategories::route('/'),
+            'create' => Pages\CreateSubCategory::route('/create'),
+            'edit' => Pages\EditSubCategory::route('/{record}/edit'),
         ];
     }
 }

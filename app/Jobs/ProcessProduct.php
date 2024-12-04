@@ -52,8 +52,19 @@ class ProcessProduct implements ShouldQueue
 
             $response = $this->GetProductsDocuments($productId);
             $prd_ = $response['product_documents'];
-            $productData[0] = $eanCode;
-            $productData[1] = implode('|', array_column($prd_, 'url'));
+            $productData = [
+                $eanCode,
+                implode('|', array_column($prd_, 'url')),
+                $this->product['subcategory_id'],
+                $this->product['producer'],
+                $this->product['image'],
+                json_encode($this->product['mechanical_parameters']),
+                json_encode($this->product['logistic_parameters']),
+                json_encode($this->product['stock']),
+                json_encode($this->product['quantity_unit']),
+                $this->product['description'], // New field
+                $this->product['price'],       // New field
+            ];
             Storage::append($this->filename, implode(',', $productData));
 
             Log::info("Processed product ID: {$productId}");
