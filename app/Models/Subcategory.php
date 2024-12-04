@@ -30,7 +30,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Subcategory whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-class Subcategory extends Model
+class SubCategory extends Model
 {
     use HasFactory;
 

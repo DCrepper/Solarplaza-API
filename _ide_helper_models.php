@@ -131,7 +131,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Subcategory whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-	class Subcategory extends \Eloquent {}
+	class SubCategory extends \Eloquent {}
 }
 
 namespace App\Models{
