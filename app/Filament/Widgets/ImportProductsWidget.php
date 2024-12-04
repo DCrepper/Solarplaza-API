@@ -8,7 +8,7 @@ use App\Models\Product;
 use App\Models\Category;
 use Filament\Widgets\Widget;
 use App\Http\Controllers\ApiController;
-use App\Models\Subcategory;
+use App\Models\SubCategory;
 
 class ImportProductsWidget extends Widget
 {
@@ -41,7 +41,7 @@ class ImportProductsWidget extends Widget
                 'name' => $category['name'],
             ]);
             foreach ($category['subcategories'] as $subcategory) {
-                Subcategory::whereSubCategoryId($subcategory['id'])->firstOrCreate([
+                SubCategory::whereSubCategoryId($subcategory['id'])->firstOrCreate([
                     'category_id' => $category['id'],
                     'sub_category_id' => $subcategory['id'],
                     'name' => $subcategory['name'],

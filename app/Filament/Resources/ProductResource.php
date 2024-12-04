@@ -25,7 +25,7 @@ class ProductResource extends Resource
         return $form
             ->schema([
                 TextInput::make('product_id'),
-                TextInput::make('subcategory_id')
+                TextInput::make('sub_category_id')
                     ->numeric(),
                 TextInput::make('index'),
                 TextInput::make('name'),
@@ -53,7 +53,7 @@ class ProductResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('product_id')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('subcategory_id')
+                Tables\Columns\TextColumn::make('sub_category_id')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('index')
