@@ -1,17 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\SubCategoryResource\Pages;
-use App\Filament\Resources\SubCategoryResource\RelationManagers;
 use App\Models\SubCategory;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Components\TextInput;
 
 class SubCategoryResource extends Resource
 {
@@ -25,7 +25,9 @@ class SubCategoryResource extends Resource
             ->schema([
                 Forms\Components\Select::make('category_id')
                     ->relationship('category', 'name'),
-                Forms\Components\TextInput::make('name'),
+                TextInput::make('sub_category_id')
+                    ->numeric(),
+                TextInput::make('name'),
             ]);
     }
 
@@ -34,6 +36,9 @@ class SubCategoryResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('category.name')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('sub_category_id')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('name')

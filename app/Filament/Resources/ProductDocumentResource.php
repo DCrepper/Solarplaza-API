@@ -11,6 +11,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Filament\Forms\Components\TextInput;
 
 class ProductDocumentResource extends Resource
 {
@@ -22,11 +23,10 @@ class ProductDocumentResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('product_id')
-                    ->required(),
-                Forms\Components\TextInput::make('url')
-                    ->required(),
-                Forms\Components\TextInput::make('type'),
+                Forms\Components\Select::make('product_id')
+                    ->relationship('product', 'name'),
+                TextInput::make('description'),
+                TextInput::make('url'),
             ]);
     }
 
@@ -34,11 +34,12 @@ class ProductDocumentResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('product_id')
+                Tables\Columns\TextColumn::make('product.name')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('description')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('url')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('type')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()

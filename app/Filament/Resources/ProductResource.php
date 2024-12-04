@@ -1,17 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\ProductResource\Pages;
-use App\Filament\Resources\ProductResource\RelationManagers;
-use App\Models\Product;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
+use App\Models\Product;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Textarea;
+use Filament\Resources\Resource;
+use App\Filament\Resources\ProductResource\Pages;
 
 class ProductResource extends Resource
 {
@@ -23,25 +24,25 @@ class ProductResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('product_id'),
-                Forms\Components\TextInput::make('subcategory_id')
+                TextInput::make('product_id'),
+                TextInput::make('subcategory_id')
                     ->numeric(),
-                Forms\Components\TextInput::make('index'),
-                Forms\Components\TextInput::make('name'),
-                Forms\Components\TextInput::make('producer'),
-                Forms\Components\Textarea::make('description')
+                TextInput::make('index'),
+                TextInput::make('name'),
+                TextInput::make('producer'),
+                Textarea::make('description')
                     ->columnSpanFull(),
                 Forms\Components\FileUpload::make('image')
                     ->image(),
-                Forms\Components\TextInput::make('price')
+                TextInput::make('price')
                     ->numeric()
                     ->prefix('$'),
-                Forms\Components\TextInput::make('mechanical_parameters_width'),
-                Forms\Components\TextInput::make('mechanical_parameters_height'),
-                Forms\Components\TextInput::make('mechanical_parameters_thickness'),
-                Forms\Components\TextInput::make('mechanical_parameters_weight'),
-                Forms\Components\TextInput::make('ean_code'),
-                Forms\Components\TextInput::make('stock')
+                TextInput::make('mechanical_parameters_width'),
+                TextInput::make('mechanical_parameters_height'),
+                TextInput::make('mechanical_parameters_thickness'),
+                TextInput::make('mechanical_parameters_weight'),
+                TextInput::make('ean_code'),
+                TextInput::make('stock')
                     ->numeric(),
             ]);
     }
