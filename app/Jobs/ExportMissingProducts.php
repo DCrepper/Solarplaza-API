@@ -57,6 +57,13 @@ class ExportMissingProducts implements ShouldQueue
                 'Name' => $product->name,
                 'Price' => $product->price,
                 'Stock' => $product->stock,
+                'description' => $product->description,
+                'image' => $product->image,
+                'mechanical_parameters_width' => $product->mechanical_parameters_width,
+                'mechanical_parameters_height' => $product->mechanical_parameters_height,
+                'mechanical_parameters_thickness' => $product->mechanical_parameters_thickness,
+                'mechanical_parameters_weight' => $product->mechanical_parameters_weight,
+                'ean_code' => $product->ean_code,
             ];
         }
 
@@ -64,9 +71,21 @@ class ExportMissingProducts implements ShouldQueue
         $csvFilePath = storage_path('app/' . $csvFileName);
 
         $file = fopen($csvFilePath, 'w');
-        fputcsv($file, ['SKU', 'Name', 'Price', 'Stock'], ";");
+        fputcsv($file, [
+            'SKU',
+            'Name',
+            'Price',
+            'Stock',
+            'description',
+            'image',
+            'mechanical_parameters_width',
+            'mechanical_parameters_height',
+            'mechanical_parameters_thickness',
+            'mechanical_parameters_weight',
+            'ean_code',
+        ], ";");
         foreach ($csvData as $row) {
-            fputcsv($file, $row);
+            fputcsv($file, $row, ";");
         }
         fclose($file);
 
