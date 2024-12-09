@@ -28,13 +28,14 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('product_id')->nullable();
-            $table->foreignId('subcategory_id')->nullable();
+            $table->foreignId('sub_category_id')->nullable();
             $table->string('index')->nullable();
             $table->string('name')->nullable();
             $table->string('producer')->nullable();
             $table->text('description')->nullable();
             $table->string('image')->nullable();
-            $table->integer('price')->nullable();
+            //price like 2.50 or 2.50
+            $table->string('price')->nullable();
             $table->string('mechanical_parameters_width')->nullable();
             $table->string('mechanical_parameters_height')->nullable();
             $table->string('mechanical_parameters_thickness')->nullable();

@@ -4,15 +4,16 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources;
 
-use Filament\Forms;
-use Filament\Tables;
+use App\Filament\Resources\ProductResource\Pages;
 use App\Models\Product;
+use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Resources\Resource;
+use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Textarea;
-use Filament\Resources\Resource;
-use App\Filament\Resources\ProductResource\Pages;
+use Filament\Tables\Columns\TextColumn;
+use App\Jobs\UploadProductsToWooCommerce;
 
 class ProductResource extends Resource
 {
@@ -30,12 +31,11 @@ class ProductResource extends Resource
                 TextInput::make('index'),
                 TextInput::make('name'),
                 TextInput::make('producer'),
-                Textarea::make('description')
+                Forms\Components\Textarea::make('description')
                     ->columnSpanFull(),
                 Forms\Components\FileUpload::make('image')
                     ->image(),
                 TextInput::make('price')
-                    ->numeric()
                     ->prefix('$'),
                 TextInput::make('mechanical_parameters_width'),
                 TextInput::make('mechanical_parameters_height'),
@@ -51,39 +51,39 @@ class ProductResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('product_id')
+                TextColumn::make('product_id')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('sub_category_id')
+                TextColumn::make('sub_category_id')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('index')
+                TextColumn::make('index')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('name')
+                TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('producer')
+                TextColumn::make('producer')
                     ->searchable(),
                 Tables\Columns\ImageColumn::make('image'),
-                Tables\Columns\TextColumn::make('price')
-                    ->money()
+                TextColumn::make('price')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('mechanical_parameters_width')
+                TextColumn::make('mechanical_parameters_width')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('mechanical_parameters_height')
+                TextColumn::make('mechanical_parameters_height')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('mechanical_parameters_thickness')
+                TextColumn::make('mechanical_parameters_thickness')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('mechanical_parameters_weight')
+                TextColumn::make('mechanical_parameters_weight')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('ean_code')
+                TextColumn::make('ean_code')
+                    ->sortable()
                     ->searchable(),
-                Tables\Columns\TextColumn::make('stock')
+                TextColumn::make('stock')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -98,7 +98,24 @@ class ProductResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->paginated([10, 25, 50, 100]);
+    }
+
+    public static function chunkAndUploadProducts(): void
+    {
+        Product::chunk(100, function ($products) {
+            $updateData = $products->map(function ($product) {
+                return [
+                    'id' => $product->id,
+                    'price' => $product->price,
+                    'stock_quantity' => $product->stock,
+                    'status' => 'publish',
+                ];
+            })->toArray();
+
+            UploadProductsToWooCommerce::dispatch($updateData);
+        });
     }
 
     public static function getRelations(): array

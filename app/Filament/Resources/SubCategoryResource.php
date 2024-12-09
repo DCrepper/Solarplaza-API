@@ -12,6 +12,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Forms\Components\TextInput;
+use Filament\Tables\Columns\TextColumn;
 
 class SubCategoryResource extends Resource
 {
@@ -35,19 +36,19 @@ class SubCategoryResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('category.name')
+                TextColumn::make('category.name')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('sub_category_id')
+                TextColumn::make('sub_category_id')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('name')
+                TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

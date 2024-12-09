@@ -58,7 +58,7 @@ class Product extends Model
 
     protected $fillable = [
         'product_id',
-        'subcategory_id',
+        'sub_category_id',
         'index',
         'name',
         'producer',

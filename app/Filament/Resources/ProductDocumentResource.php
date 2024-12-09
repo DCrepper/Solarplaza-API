@@ -12,6 +12,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Forms\Components\TextInput;
+use Filament\Tables\Columns\TextColumn;
 
 class ProductDocumentResource extends Resource
 {
@@ -34,18 +35,18 @@ class ProductDocumentResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('product.name')
+                TextColumn::make('product.name')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('description')
+                TextColumn::make('description')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('url')
+                TextColumn::make('url')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
