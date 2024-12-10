@@ -28,8 +28,11 @@ class ApiController extends Controller
             'method' => 'GetProductDocuments',
             'parameters' => [['ProductId' => $prodID]],
         ];
-
-        return self::apiRequest($data)['product_documents'];
+        $documents = self::apiRequest($data);
+        if (!isset($documents['product_documents'])) {
+            return [];
+        }
+        return $documents['product_documents'];
     }
 
     public static function GetProductCategories(): array

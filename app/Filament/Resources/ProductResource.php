@@ -31,6 +31,7 @@ class ProductResource extends Resource
                 TextInput::make('index'),
                 TextInput::make('name'),
                 TextInput::make('producer'),
+                TextInput::make('document'),
                 Forms\Components\Textarea::make('description')
                     ->columnSpanFull(),
                 Forms\Components\FileUpload::make('image')
@@ -79,10 +80,13 @@ class ProductResource extends Resource
                 TextColumn::make('stock')
                     ->numeric()
                     ->sortable(),
+                TextColumn::make('document')
+                ->searchable()
+                ->sortable(),
                 TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                ->dateTime()
+                ->sortable()
+                ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()

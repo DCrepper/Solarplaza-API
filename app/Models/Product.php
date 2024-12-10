@@ -62,6 +62,7 @@ class Product extends Model
         'index',
         'name',
         'producer',
+        'document',
         'description',
         'image',
         'price',

@@ -80,6 +80,8 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Product whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Product whereWarrantyExtensionForProductIndex($value)
  * @mixin \Eloquent
+ * @property int|null $sub_category_id
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Product whereSubCategoryId($value)
  */
 	class Product extends \Eloquent {}
 }
@@ -130,6 +132,8 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Subcategory whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Subcategory whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property int|null $sub_category_id
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SubCategory whereSubCategoryId($value)
  */
 	class SubCategory extends \Eloquent {}
 }

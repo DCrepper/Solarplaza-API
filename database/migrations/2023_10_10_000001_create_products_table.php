@@ -34,7 +34,6 @@ class CreateProductsTable extends Migration
             $table->string('producer')->nullable();
             $table->text('description')->nullable();
             $table->string('image')->nullable();
-            //price like 2.50 or 2.50
             $table->string('price')->nullable();
             $table->string('mechanical_parameters_width')->nullable();
             $table->string('mechanical_parameters_height')->nullable();
@@ -42,6 +41,7 @@ class CreateProductsTable extends Migration
             $table->string('mechanical_parameters_weight')->nullable();
             $table->string('ean_code')->nullable();
             $table->integer('stock')->nullable();
+            $table->text('document')->nullable();
             $table->timestamps();
         });
     }

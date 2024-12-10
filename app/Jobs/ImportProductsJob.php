@@ -24,7 +24,6 @@ class ImportProductsJob implements ShouldQueue
 
     public function handle()
     {
-        $i = 0;
         foreach (ApiController::GetProductBase() as $product) {
             $stock = (int) $product['stock']['Nyiregyhaza'] + (int) $product['stock']['Szekesfehervar'] + (int) $product['stock']['Poland'];
             Product::whereProductId($product['product_id'])->firstOrCreate([
@@ -43,9 +42,7 @@ class ImportProductsJob implements ShouldQueue
                 'ean_code' => $product['logistic_parameters']['ean_code'],
                 'stock' => $stock,
             ]);
-            if ($i == 0) {
-                dump($product['name'] . " " . $stock);
-            }
+
         }
 
         foreach (ApiController::GetProductCategories() as $category) {

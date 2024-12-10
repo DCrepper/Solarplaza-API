@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Jobs;
 
+use App\Http\Controllers\ApiController;
 use App\Models\Product;
 use Automattic\WooCommerce\Client;
 use Illuminate\Foundation\Queue\Queueable;
@@ -52,6 +53,17 @@ class ExportMissingProducts implements ShouldQueue
         // Exportálás CSV fájlba
         $csvData = [];
         foreach ($missingProducts as $product) {
+            $documents = ApiController::GetProductDocuments($product->product_id);
+            $document_file = '';
+            foreach ($documents as $document) {
+
+                if (strpos($document['description'], 'DE') !== false) {
+                    //documentumot egy szövegbe | karakterrel elválasztva
+                    $document_file .=  $document['url'] . '|' ;
+                }
+                $product->update(['document' => $document_file]);
+            }
+
             $csvData[] = [
                 'SKU' => $product->ean_code,
                 'Name' => $product->name,
@@ -64,7 +76,11 @@ class ExportMissingProducts implements ShouldQueue
                 'mechanical_parameters_thickness' => $product->mechanical_parameters_thickness,
                 'mechanical_parameters_weight' => $product->mechanical_parameters_weight,
                 'ean_code' => $product->ean_code,
+                'document' => $product->document,
             ];
+
+            // Késleltetés a lekérdezési limit elkerülése érdekében
+            usleep(600000); // 600000 mikrosekundum = 0.6 másodperc
         }
 
         $csvFileName = 'missing_products.csv';
@@ -83,6 +99,7 @@ class ExportMissingProducts implements ShouldQueue
             'mechanical_parameters_thickness',
             'mechanical_parameters_weight',
             'ean_code',
+            'document'
         ], ";");
         foreach ($csvData as $row) {
             fputcsv($file, $row, ";");
