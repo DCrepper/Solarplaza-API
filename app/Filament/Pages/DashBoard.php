@@ -5,16 +5,17 @@ declare(strict_types=1);
 namespace App\Filament\Pages;
 
 use Filament\Actions\Action;
-use Filament\Pages\Dashboard as BaseDashboard;
 use Filament\Actions\ActionGroup;
 use Filament\Support\Enums\ActionSize;
 use App\Filament\Widgets\StatOverviewWidget;
-use App\Filament\Widgets\WoocommerceProductImportButton;
+use App\Filament\Widgets\ImportProductsWidget;
+use Filament\Pages\Dashboard as BaseDashboard;
 use Dotswan\FilamentLaravelPulse\Widgets\PulseCache;
 use Dotswan\FilamentLaravelPulse\Widgets\PulseUsage;
 use Dotswan\FilamentLaravelPulse\Widgets\PulseQueues;
 use Dotswan\FilamentLaravelPulse\Widgets\PulseServers;
 use Filament\Pages\Dashboard\Concerns\HasFiltersAction;
+use App\Filament\Widgets\WoocommerceProductImportButton;
 use Dotswan\FilamentLaravelPulse\Widgets\PulseExceptions;
 use Dotswan\FilamentLaravelPulse\Widgets\PulseSlowQueries;
 use Dotswan\FilamentLaravelPulse\Widgets\PulseSlowRequests;
@@ -53,6 +54,7 @@ class DashBoard extends BaseDashboard
         return [
             StatOverviewWidget::class,
             WoocommerceProductImportButton::class,
+            ImportProductsWidget::class,
             PulseServers::class,
             PulseCache::class,
             PulseExceptions::class,
