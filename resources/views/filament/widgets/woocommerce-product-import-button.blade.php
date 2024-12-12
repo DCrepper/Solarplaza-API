@@ -8,8 +8,8 @@
             Import products from WooCommerce to your store.
         </x-filament::section.description>
 
-        <x-filament::button.group wire:click="startImportJob">
-            <x-filament::button wire:click="startImportJob">
+        <x-filament::button.group>
+            <x-filament::button wire:click="startImportWoocommerceSwitchedProducts">
                 Import Products
             </x-filament::button>
         </x-filament::button.group>
