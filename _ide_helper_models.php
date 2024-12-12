@@ -81,6 +81,8 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Product whereWarrantyExtensionForProductIndex($value)
  * @mixin \Eloquent
  * @property int|null $sub_category_id
+ * @property string|null $document
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Product whereDocument($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Product whereSubCategoryId($value)
  */
 	class Product extends \Eloquent {}
@@ -116,6 +118,30 @@ namespace App\Models{
  * 
  *
  * @property int $id
+ * @property string|null $name
+ * @property string|null $value
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Stat name($name)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Stat nameValue($name, $value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Stat newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Stat newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Stat query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Stat value($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Stat whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Stat whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Stat whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Stat whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Stat whereValue($value)
+ */
+	class Stat extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
+ * @property int $id
  * @property int $category_id
  * @property string $name
  * @property \Illuminate\Support\Carbon|null $created_at
@@ -133,9 +159,29 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Subcategory whereUpdatedAt($value)
  * @mixin \Eloquent
  * @property int|null $sub_category_id
+ * @property-read SubCategory|null $subCategory
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SubCategory whereSubCategoryId($value)
  */
 	class SubCategory extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * 
+ *
+ * @property int $id
+ * @property string $sku
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SwitchedProduct newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SwitchedProduct newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SwitchedProduct query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SwitchedProduct whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SwitchedProduct whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SwitchedProduct whereSku($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|SwitchedProduct whereUpdatedAt($value)
+ */
+	class SwitchedProduct extends \Eloquent {}
 }
 
 namespace App\Models{

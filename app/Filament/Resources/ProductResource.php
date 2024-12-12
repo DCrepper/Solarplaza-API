@@ -4,16 +4,20 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\ProductResource\Pages;
-use App\Models\Product;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
+use App\Models\Product;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
-use Filament\Forms\Components\TextInput;
+use App\Models\SwitchedProduct;
+use Filament\Resources\Resource;
+use Filament\Tables\Actions\BulkAction;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Forms\Components\TextInput;
 use App\Jobs\UploadProductsToWooCommerce;
+use Illuminate\Database\Eloquent\Collection;
+use Filament\Tables\Actions\DeleteBulkAction;
+use App\Filament\Resources\ProductResource\Pages;
 
 class ProductResource extends Resource
 {
@@ -100,8 +104,16 @@ class ProductResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    DeleteBulkAction::make(),
+                    BulkAction::make('switchNameAndDescription')
+                        ->action(function (Collection $records) {
+                            foreach ($records as $record) {
+                                SwitchedProduct::whereSku($record->ean_code)->firstOrCreate(['sku' => $record->ean_code]);
+                            }
+                        })
+                        ->label('Switch Name and Description')
                 ]),
+
             ])
             ->paginated([10, 25, 50, 100]);
     }

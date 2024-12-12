@@ -4,15 +4,18 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\SubCategoryResource\Pages;
-use App\Models\SubCategory;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
-use Filament\Forms\Components\TextInput;
+use App\Models\SubCategory;
+use Filament\Resources\Resource;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Forms\Components\TextInput;
+use Filament\Tables\Actions\ExportAction;
+use Filament\Tables\Filters\SelectFilter;
+use App\Filament\Exports\SubCategoryExporter;
+use App\Filament\Resources\SubCategoryResource\Pages;
 
 class SubCategoryResource extends Resource
 {
@@ -43,6 +46,7 @@ class SubCategoryResource extends Resource
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('name')
+                    ->sortable()
                     ->searchable(),
                 TextColumn::make('created_at')
                     ->dateTime()
@@ -54,7 +58,9 @@ class SubCategoryResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                SelectFilter::make('name')
+                ->options(SubCategory::get('name')->pluck('name', 'name'))
+                ->attribute('name'),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -63,6 +69,10 @@ class SubCategoryResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
+            ])
+            ->headerActions([
+                ExportAction::make()
+                    ->exporter(SubCategoryExporter::class)
             ]);
     }
 

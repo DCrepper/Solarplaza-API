@@ -4,16 +4,18 @@ declare(strict_types=1);
 
 namespace App\Jobs;
 
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\SerializesModels;
-use App\Http\Controllers\ApiController;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\SubCategory;
+use Illuminate\Bus\Batchable;
+use Illuminate\Bus\Queueable;
+use App\Models\SwitchedProduct;
 use Automattic\WooCommerce\Client;
+use Illuminate\Queue\SerializesModels;
+use App\Http\Controllers\ApiController;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
 
 class ImportProductsJob implements ShouldQueue
 {
@@ -21,11 +23,20 @@ class ImportProductsJob implements ShouldQueue
     use InteractsWithQueue;
     use Queueable;
     use SerializesModels;
+    use Batchable;
 
     public function handle()
     {
+        // Import products from API
         foreach (ApiController::GetProductBase() as $product) {
             $stock = (int) $product['stock']['Nyiregyhaza'] + (int) $product['stock']['Szekesfehervar'] + (int) $product['stock']['Poland'];
+            $switchedProduct = SwitchedProduct::where('sku', $product['logistic_parameters']['ean_code'])->first();
+
+            if ($switchedProduct) {
+                $tmp = $product['description']['de'];
+                $product['description']['de'] = $product['name'];
+                $product['name'] = $tmp;
+            }
             Product::whereProductId($product['product_id'])->firstOrCreate([
                 'product_id' => $product['product_id'],
                 'sub_category_id' => $product['subcategory_id'],
