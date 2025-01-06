@@ -95,7 +95,7 @@ class ImportProductsJob implements ShouldQueue
                 $updateData[] = [
                     'id' => $woo_product->id,
                     'status' => 'publish',
-                    'price' => $product->price,
+                    'price' => $product->price * 1.15,
                     'regular_price' => $product->price,
                     'stock_quantity' => $product->stock,
                 ];

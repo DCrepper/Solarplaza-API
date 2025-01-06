@@ -113,8 +113,5 @@ class ExportMissingProducts implements ShouldQueue
             fputcsv($file, $row, ";");
         }
         fclose($file);
-
-        // Fájl letöltése
-        // Itt nem szükséges letöltést kezelni, mivel a job a háttérben fut
     }
 }
