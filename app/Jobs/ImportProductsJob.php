@@ -97,7 +97,7 @@ class ImportProductsJob implements ShouldQueue
                     'id' => $woo_product->id,
                     'status' => 'publish',
                     'price' => $product->price * 1.15,
-                    'regular_price' => $product->price,
+                    'regular_price' => $product->price * 1.15,
                     'stock_quantity' => $product->stock,
                 ];
             }
