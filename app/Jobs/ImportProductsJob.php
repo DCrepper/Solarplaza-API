@@ -24,6 +24,7 @@ class ImportProductsJob implements ShouldQueue
     use Queueable;
     use SerializesModels;
     use Batchable;
+    public $timeout = 500;
 
     public function handle()
     {
