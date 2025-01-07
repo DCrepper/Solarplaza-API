@@ -55,14 +55,14 @@ class DashBoard extends BaseDashboard
             StatOverviewWidget::class,
             WoocommerceProductImportButton::class,
             ImportProductsWidget::class,
-            PulseServers::class,
+            /* PulseServers::class,
             PulseCache::class,
             PulseExceptions::class,
             PulseUsage::class,
             PulseQueues::class,
             PulseSlowQueries::class,
             PulseSlowRequests::class,
-            PulseSlowOutGoingRequests::class
+            PulseSlowOutGoingRequests::class */
         ];
     }
 }
