@@ -21,7 +21,7 @@ class ExportMissingProducts implements ShouldQueue
     use InteractsWithQueue;
     use Queueable;
     use SerializesModels;
-    public $timeout = 2000;
+    public $timeout = 10000;
     /**
      * Create a new job instance.
      */
@@ -58,8 +58,6 @@ class ExportMissingProducts implements ShouldQueue
             return in_array($product->ean_code, $wooProductSkus);
         });
 
-        // Exportálás CSV fájlba
-        $csvData = [];
         foreach ($missingProducts as $product) {
             $documents = ApiController::GetProductDocuments($product->product_id);
             $document_file = '';
@@ -69,49 +67,15 @@ class ExportMissingProducts implements ShouldQueue
                     //documentumot egy szövegbe | karakterrel elválasztva
                     $document_file .=  $document['url'] . '|' ;
                 }
-                $product->update(['document' => $document_file]);
+                
             }
-
-            $csvData[] = [
-                'SKU' => $product->ean_code,
-                'Name' => $product->name,
-                'Price' => $product->price,
-                'Stock' => $product->stock,
-                'description' => $product->description,
-                'image' => $product->image,
-                'mechanical_parameters_width' => $product->mechanical_parameters_width,
-                'mechanical_parameters_height' => $product->mechanical_parameters_height,
-                'mechanical_parameters_thickness' => $product->mechanical_parameters_thickness,
-                'mechanical_parameters_weight' => $product->mechanical_parameters_weight,
-                'ean_code' => $product->ean_code,
-                'document' => $product->document,
-            ];
+            $product->update(['document' => $document_file]);
+            
 
             // Késleltetés a lekérdezési limit elkerülése érdekében
             usleep(600000); // 600000 mikrosekundum = 0.6 másodperc
         }
-
-        $csvFileName = 'missing_products.csv';
-        $csvFilePath = storage_path('app/' . $csvFileName);
-
-        $file = fopen($csvFilePath, 'w');
-        fputcsv($file, [
-            'SKU',
-            'Name',
-            'Price',
-            'Stock',
-            'description',
-            'image',
-            'mechanical_parameters_width',
-            'mechanical_parameters_height',
-            'mechanical_parameters_thickness',
-            'mechanical_parameters_weight',
-            'ean_code',
-            'document'
-        ], ";");
-        foreach ($csvData as $row) {
-            fputcsv($file, $row, ";");
-        }
-        fclose($file);
+        $this->appendToChain(new ExportProductToCsv);
+        
     }
 }
