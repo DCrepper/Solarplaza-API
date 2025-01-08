@@ -21,7 +21,7 @@ class ExportMissingProducts implements ShouldQueue
     use InteractsWithQueue;
     use Queueable;
     use SerializesModels;
-    public $timeout = 500;
+    public $timeout = 2000;
     /**
      * Create a new job instance.
      */
