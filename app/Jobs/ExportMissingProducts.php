@@ -21,7 +21,7 @@ class ExportMissingProducts implements ShouldQueue
     use InteractsWithQueue;
     use Queueable;
     use SerializesModels;
-
+    public $timeout = 500;
     /**
      * Create a new job instance.
      */
@@ -55,7 +55,7 @@ class ExportMissingProducts implements ShouldQueue
 
         // Azok a termékek, amelyek nincsenek a WooCommerce adatbázisban
         $missingProducts = $localProducts->filter(function ($product) use ($wooProductSkus) {
-            return !in_array($product->ean_code, $wooProductSkus);
+            return in_array($product->ean_code, $wooProductSkus);
         });
 
         // Exportálás CSV fájlba
