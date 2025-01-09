@@ -56,7 +56,7 @@ class ImportProductsJob implements ShouldQueue
             ]);
 
         }
-
+        /*
         foreach (ApiController::GetProductCategories() as $category) {
             Category::whereCategoryId($category['id'])->firstOrCreate([
                 'category_id' => $category['id'],
@@ -70,7 +70,7 @@ class ImportProductsJob implements ShouldQueue
                 ]);
             }
         }
-
+        */
         $woocommerce = new Client(
             'https://solarplaza.at',
             env('WORDPRESS_KEY'),

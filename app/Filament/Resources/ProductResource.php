@@ -14,6 +14,7 @@ use Filament\Resources\Resource;
 use Filament\Tables\Actions\BulkAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
+use Filament\Tables\Columns\ImageColumn;
 use App\Jobs\UploadProductsToWooCommerce;
 use Illuminate\Database\Eloquent\Collection;
 use Filament\Tables\Actions\DeleteBulkAction;
@@ -65,10 +66,11 @@ class ProductResource extends Resource
                 TextColumn::make('index')
                     ->searchable(),
                 TextColumn::make('name')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable(),
                 TextColumn::make('producer')
                     ->searchable(),
-                Tables\Columns\ImageColumn::make('image'),
+                ImageColumn::make('image'),
                 TextColumn::make('price')
                     ->sortable(),
                 TextColumn::make('mechanical_parameters_width')
