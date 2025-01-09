@@ -64,8 +64,8 @@ class ProcessProduct implements ShouldQueue
                 json_encode($this->product['logistic_parameters']),
                 json_encode($this->product['stock']),
                 json_encode($this->product['quantity_unit']),
-                $this->product['description'], // New field
-                $this->product['price'],       // New field
+                $this->product['description'], 
+                $this->product['price'],       
             ];
             Storage::append($this->filename, implode(',', $productData));
 

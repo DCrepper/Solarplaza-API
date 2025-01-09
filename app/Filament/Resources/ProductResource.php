@@ -57,7 +57,8 @@ class ProductResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('product_id')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable(),
                 TextColumn::make('sub_category_id')
                     ->numeric()
                     ->sortable(),

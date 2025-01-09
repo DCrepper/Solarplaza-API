@@ -50,8 +50,8 @@ class ExportMissingProducts implements ShouldQueue
         $wooProducts = $woocommerce->get('products', ['per_page' => 4000]);
         $wooProductSkus = collect($wooProducts)->pluck('sku')->toArray();
 
-        // Helyi adatbázis termékek lekérése
-        $localProducts = Product::get();
+        /** @var \Illuminate\Database\Eloquent\Collection<int, \App\Models\Product> $localProducts */
+        $localProducts = Product::all();
 
         // Azok a termékek, amelyek nincsenek a WooCommerce adatbázisban
         $missingProducts = $localProducts->filter(function ($product) use ($wooProductSkus) {
