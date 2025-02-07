@@ -38,7 +38,7 @@ class ImportProductsJob implements ShouldQueue
                 $product['description']['de'] = $product['name'];
                 $product['name'] = $tmp;
             }
-            Product::whereProductId($product['product_id'])->firstOrCreate([
+            Product::whereProductId($product['product_id'])->updateOrCreate([
                 'product_id' => $product['product_id'],
                 'sub_category_id' => $product['subcategory_id'],
                 'index' => $product['index'],
