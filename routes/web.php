@@ -10,6 +10,6 @@ Route::get('/', function () {
 });
 Route::get('/update-products-from-api', function () {
     ImportProductsJob::dispatch();
-    return redirect(null, 200);
+    return response()->json(['message' => 'Products update initiated'], 200);
 });
 require __DIR__ . '/auth.php';
