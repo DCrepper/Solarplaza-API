@@ -12,4 +12,6 @@ Route::get('/update-products-from-api', function () {
     ImportProductsJob::dispatch();
     return response()->json(['message' => 'Products update initiated'], 200);
 });
+
+
 require __DIR__ . '/auth.php';

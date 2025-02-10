@@ -93,8 +93,14 @@ class ImportProductsJob implements ShouldQueue
         }
         $updateData = [];
         foreach ($products as $woo_product) {
+            if ($woo_product->sku == null || $woo_product->sku == '') {
+                continue;
+            }
             $product = Product::whereEanCode($woo_product->sku)->first();
-            if ($product) {
+            if ($product == null) {
+                //dump($woo_product->sku);
+            }
+            if ($product?->exists()) {
                 $updateData[] = [
                     'id' => $woo_product->id,
                     'status' => 'publish',
